@@ -36,7 +36,8 @@ Raw Dataset (CSV)
    ├── Full Job Text Parsing
    ├── Structured Form Submission
    └── Prediction Risk Score & Keyword Explanations (src/explain.py)
-``` 
+```
+
 ## Directory Structure
 
 ```
@@ -105,6 +106,8 @@ Bash
 python -m venv venv
 source venv/bin/activate
 3. Install Dependencies
+
+
 Bash
 pip install -r requirements.txt
 How to Run
