@@ -7,7 +7,7 @@ A machine learning and natural language processing system designed to analyze jo
 
 ## Project Architecture & Methodology
 
-```text
+
 Raw Dataset (CSV)
       │
       ▼
