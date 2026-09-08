@@ -7,7 +7,7 @@ A machine learning and natural language processing system designed to analyze jo
 
 ## Project Architecture & Methodology
 
-
+```
 Raw Dataset (CSV)
       │
       ▼
@@ -36,9 +36,10 @@ Raw Dataset (CSV)
    ├── Full Job Text Parsing
    ├── Structured Form Submission
    └── Prediction Risk Score & Keyword Explanations (src/explain.py)
-
+``` 
 ## Directory Structure
 
+```
 fake-job-posting-detection/
 ├── app.py                      # Interactive Streamlit application
 ├── requirements.txt            # Python dependencies
@@ -63,8 +64,10 @@ fake-job-posting-detection/
 │   └── exploration.ipynb       # Exploratory Data Analysis (EDA) notebook
 └── tests/                      # Unit tests
     └── test_data.py
+```
 
 ## Dataset Overview
+
 This project uses the Kaggle Real or Fake Job Posting Prediction dataset.
 
 Target Column: fraudulent
@@ -76,12 +79,14 @@ Target Column: fraudulent
 Class Imbalance: ~95% Real postings vs. ~5% Fake postings.
 
 ## Canonical Schema
+```
 Column Name	Category	Description
 job_id	Identifier	Unique posting ID (excluded from predictive features)
 title, company_profile, description, requirements, benefits	Unstructured Text	Combined for TF-IDF feature extraction
 location, department, salary_range, employment_type, required_experience, required_education, industry, function	Categorical	Structured details encoded using OneHotEncoder
 telecommuting, has_company_logo, has_questions	Binary	Safe numeric indicator flags
 fraudulent	Target	Classification label
+```
 
 ## Setup & Installation
 1. Clone the Repository
