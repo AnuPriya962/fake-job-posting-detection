@@ -1,4 +1,3 @@
-
 # Fake Job Posting Detection
 
 A machine learning and natural language processing system designed to analyze job postings—combining unstructured text and structured metadata—to classify them as **Real** or **Fake**. Built with custom data validation, automated model selection across four classical algorithms, feature-level explainability, and an interactive Streamlit web application.
@@ -7,40 +6,46 @@ A machine learning and natural language processing system designed to analyze jo
 
 ## Project Architecture & Methodology
 
+
 ```
+
 Raw Dataset (CSV)
-      │
-      ▼
+│
+▼
+
 1. Data Validation & Cleaning (src/data_loader.py)
-      │
-      ▼
+│
+▼
 2. Preprocessing & Feature Engineering (src/preprocessing.py)
-   ├── Text Fields  ──► TF-IDF Vectorization (1-2 N-Grams)
-   ├── Categorical  ──► One-Hot Encoding (Unknown handling)
-   └── Binary/Num   ──► Numeric Normalization
-      │
-      ▼
+├── Text Fields  ──► TF-IDF Vectorization (1-2 N-Grams)
+├── Categorical  ──► One-Hot Encoding (Unknown handling)
+└── Binary/Num   ──► Numeric Normalization
+│
+▼
 3. Model Training & Comparison (src/train.py, src/evaluate.py)
-   ├── Naive Bayes (MultinomialNB)
-   ├── Logistic Regression (Balanced Weights)
-   ├── Random Forest (Dimensionality Reduction via TruncatedSVD)
-   └── Support Vector Machine (LinearSVC with Calibration)
-      │
-      ▼
+├── Naive Bayes (MultinomialNB)
+├── Logistic Regression (Balanced Weights)
+├── Random Forest (Dimensionality Reduction via TruncatedSVD)
+└── Support Vector Machine (LinearSVC with Calibration)
+│
+▼
 4. Selection & Artifact Saving (models/)
-   ├── Selection Rule: Fraudulent-Class F1 / Recall / PR-AUC
-   └── Saved Output: Model, Preprocessor, Metadata, Metrics JSON
-      │
-      ▼
+├── Selection Rule: Fraudulent-Class F1 / Recall / PR-AUC
+└── Saved Output: Model, Preprocessor, Metadata, Metrics JSON
+│
+▼
 5. Interactive Web Application (app.py)
-   ├── Full Job Text Parsing
-   ├── Structured Form Submission
-   └── Prediction Risk Score & Keyword Explanations (src/explain.py)
+├── Full Job Text Parsing
+├── Structured Form Submission
+└── Prediction Risk Score & Keyword Explanations (src/explain.py)
+
 ```
 
 ## Directory Structure
 
+
 ```
+
 fake-job-posting-detection/
 ├── app.py                      # Interactive Streamlit application
 ├── requirements.txt            # Python dependencies
@@ -54,9 +59,9 @@ fake-job-posting-detection/
 │   ├── model_metadata.joblib
 │   └── evaluation_results.json
 ├── src/                        # Modular source code
-│   ├── __init__.py
+│   ├── **init**.py
 │   ├── data_loader.py          # Data ingestion & schema validation
-│   ├── preprocessing.py       # TF-IDF & structured preprocessing
+│   ├── preprocessing.py        # TF-IDF & structured preprocessing
 │   ├── train.py                # Model training pipeline
 │   ├── evaluate.py             # Evaluation metrics & reports
 │   ├── explain.py              # Prediction feature attribution
@@ -64,84 +69,119 @@ fake-job-posting-detection/
 ├── notebooks/
 │   └── exploration.ipynb       # Exploratory Data Analysis (EDA) notebook
 └── tests/                      # Unit tests
-    └── test_data.py
+├── test_data.py
+├── test_preprocessing.py
+└── test_prediction.py      # Prediction pipeline unit tests
+
 ```
 
 ## Dataset Overview
 
 This project uses the Kaggle Real or Fake Job Posting Prediction dataset.
 
-Target Column: fraudulent
-
-0 = Real / Legitimate
-
-1 = Fake / Fraudulent
-
-Class Imbalance: ~95% Real postings vs. ~5% Fake postings.
+* **Target Column:** `fraudulent`
+* **Labels:** `0` = Real / Legitimate, `1` = Fake / Fraudulent
+* **Class Imbalance:** ~95% Real postings vs. ~5% Fake postings.
 
 ## Canonical Schema
-```
-Column Name	Category	Description
-job_id	Identifier	Unique posting ID (excluded from predictive features)
-title, company_profile, description, requirements, benefits	Unstructured Text	Combined for TF-IDF feature extraction
-location, department, salary_range, employment_type, required_experience, required_education, industry, function	Categorical	Structured details encoded using OneHotEncoder
-telecommuting, has_company_logo, has_questions	Binary	Safe numeric indicator flags
-fraudulent	Target	Classification label
-```
+
+| Column Name | Category | Description |
+| :--- | :--- | :--- |
+| `job_id` | Identifier | Unique posting ID (excluded from predictive features) |
+| `title`, `company_profile`, `description`, `requirements`, `benefits` | Unstructured Text | Combined for TF-IDF feature extraction |
+| `location`, `department`, `salary_range`, `employment_type`, `required_experience`, `required_education`, `industry`, `function` | Categorical | Structured details encoded using `OneHotEncoder` |
+| `telecommuting`, `has_company_logo`, `has_questions` | Binary | Safe numeric indicator flags |
+| `fraudulent` | Target | Classification label |
+
+---
 
 ## Setup & Installation
-1. Clone the Repository
-Bash
+
+### 1. Clone the Repository
+```bash
 git clone [https://github.com/YOUR_USERNAME/fake-job-posting-detection.git](https://github.com/YOUR_USERNAME/fake-job-posting-detection.git)
 cd fake-job-posting-detection
-2. Create and Activate a Virtual Environment
-Windows:
 
-DOS
+```
+
+### 2. Create and Activate a Virtual Environment
+
+**Windows:**
+
+```cmd
 python -m venv venv
 venv\Scripts\activate
-Mac/Linux:
 
-Bash
+```
+
+**Mac/Linux:**
+
+```bash
 python -m venv venv
 source venv/bin/activate
-3. Install Dependencies
 
+```
 
-Bash
+### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
-How to Run
-1. Execute Data Unit Tests
-Verify data validation and schema handling using synthetic datasets:
 
-Bash
-pytest -q tests/test_data.py
-2. Train and Evaluate Models
-Train all candidate models (Naive Bayes, Logistic Regression, Random Forest, Linear SVM) using class imbalance strategies, evaluate multi-metric benchmarks, select the top model, and save deployment artifacts to models/:
+```
 
-Bash
+---
+
+## How to Run
+
+### 1. Execute Unit Tests
+
+Verify data validation, preprocessing, and prediction handling:
+
+```bash
+pytest -q
+
+```
+
+### 2. Train and Evaluate Models
+
+Train all candidate models (Naive Bayes, Logistic Regression, Random Forest, Linear SVM) using class imbalance strategies, evaluate multi-metric benchmarks, select the top model, and save deployment artifacts to `models/`:
+
+```bash
 python -m src.train
-3. Launch the Streamlit Web Application
+
+```
+
+### 3. Launch the Streamlit Web Application
+
 Run the interactive interface locally:
 
-Bash
+```bash
 streamlit run app.py
-Open your browser at http://localhost:8501 to use the application.
+
+```
+
+Open your browser at `http://localhost:8501` to use the application.
+
+---
 
 ## Performance Metrics & Class Imbalance Strategy
+
 Because fraudulent job postings represent only ~5% of the dataset, traditional Accuracy is a misleading metric (a dummy model predicting all posts as "Real" would achieve ~95% accuracy).
 
 To effectively detect fraudulent postings, model selection and evaluation prioritize:
 
-Precision & Recall (specifically for class 1 / Fake postings)
+* Precision & Recall (specifically for class 1 / Fake postings)
+* Fraudulent-Class F1-Score
+* PR-AUC (Precision-Recall Area Under Curve)
+* ROC-AUC
 
-Fraudulent-Class F1-Score
-
-PR-AUC (Precision-Recall Area Under Curve)
-
-ROC-AUC
+---
 
 ## Limitations & Disclaimers
-Model Predictions: Predictions and risk scores generated by this system are statistical outputs based on machine learning patterns and should be treated as guidance rather than definitive proof of fraud.
 
-## Concept Drift: Real-world scam patterns continuously evolve. Training data reflects historical postings and may not cover newer online recruitment scams.
+* **Model Predictions:** Predictions and risk scores generated by this system are statistical outputs based on machine learning patterns and should be treated as guidance rather than definitive proof of fraud.
+* **Concept Drift:** Real-world scam patterns continuously evolve. Training data reflects historical postings and may not cover newer online recruitment scams.
+
+```
+
+```
