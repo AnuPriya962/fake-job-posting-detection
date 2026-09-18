@@ -1,20 +1,27 @@
-cat << 'EOF' > .gitignore
-# Python bytecode and cache
+# Python bytecode & cache
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
 
-# Environments
+# Virtual Environments
 .venv/
 venv/
 ENV/
 env/
 
-# Large model artifacts & generated outputs
-models/*.joblib
+# Data & Notebook checkpoints
+data/*.csv
+.ipynb_checkpoints/
 
-# OS-specific files
+# Heavy model artifacts & output binaries
+models/*.joblib
+models/*.pkl
+
+# Operating System files
 .DS_Store
 Thumbs.db
-EOF
+
+# IDE configuration
+.vscode/
+.idea/
